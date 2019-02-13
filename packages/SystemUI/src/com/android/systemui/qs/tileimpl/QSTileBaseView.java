@@ -54,7 +54,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private boolean mCollapsedView;
     private boolean mClicked;
 
-    private final ImageView mBg;
     private final Drawable mTileBgActive;
     private final Drawable mTileBgInactive;
 
@@ -74,9 +73,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         mIconFrame.setForegroundGravity(Gravity.CENTER);
         int size = context.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
         addView(mIconFrame, new LayoutParams(size, size));
-        mBg = new ImageView(getContext());
-        mBg.setScaleType(ScaleType.FIT_CENTER);
-        mIconFrame.addView(mBg);
         mIcon = icon;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -180,13 +176,13 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         }
         switch (state.state) {
             case Tile.STATE_ACTIVE:
-                mBg.setImageResource(R.drawable.qs_tile_background_active);
+                mIconFrame.setBackground(mTileBgActive);
                 break;
             case Tile.STATE_INACTIVE:
-                mBg.setImageResource(R.drawable.qs_tile_background_inactive);
+                mIconFrame.setBackground(mTileBgInactive);
                 break;
             case Tile.STATE_UNAVAILABLE:
-                mBg.setImageResource(R.drawable.qs_tile_background_inactive);
+                mIconFrame.setBackground(mTileBgInactive);
                 break;
             default:
                 Log.e(TAG, "Invalid state " + state);
