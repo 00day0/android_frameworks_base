@@ -15,22 +15,12 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:paddingTop="@dimen/qs_panel_padding_top"
-    android:paddingStart="@dimen/notification_side_paddings"
-    android:paddingEnd="@dimen/notification_side_paddings"
+    android:layout_gravity="center_horizontal"
     android:gravity="center_vertical" >
-
-    <TextView
-        android:id="@+id/footer_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:layout_weight="1"
-        android:textAppearance="@style/TextAppearance.QS.TileLabel"
-        android:textColor="?android:attr/textColorSecondary"/>
 
     <ImageView
         android:id="@+id/footer_icon"
@@ -39,5 +29,14 @@
         android:contentDescription="@null"
         android:src="@drawable/ic_info_outline"
         android:tint="?android:attr/textColorSecondary"/>
+
+    <TextView
+        android:id="@+id/footer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qs_header_alarm_text_margin_start"
+        android:gravity="start"
+        android:textAppearance="@style/TextAppearance.QS.TileLabel"
+        android:textColor="?android:attr/textColorSecondary"/>
 
 </LinearLayout>
