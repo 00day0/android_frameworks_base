@@ -110,6 +110,10 @@
 
    <!-- Smart charging battery percentage -->
    <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
+   <java-symbol type="string" name="config_batteryChargerPath" />
+   <java-symbol type="string" name="config_chargerPath" />
+   <java-symbol type="string" name="config_enableCharging" />
+   <java-symbol type="string" name="config_disableCharging" />
 
   <!-- Home button wake -->
   <java-symbol type="bool" name="config_HomeWakeButton" />

@@ -227,9 +227,10 @@ public final class PowerManagerService extends SystemService
     private static final String LAST_REBOOT_PROPERTY = "persist.sys.boot.reason";
 
     // Smart charging: sysfs node of charger
-    private static final String BATTERY_CHARGER_PATH =
-            "/sys/class/power_supply/battery/battery_charging_enabled";
-    private static final String CHARGER_PATH = "/sys/class/power_supply/battery/charging_enabled";
+    private String mBatteryChargerPath;
+    private String mChargerPath;
+    private String mEnableChargingValue;
+    private String mDisableChargingValue;
 
     private final Context mContext;
     private final ServiceThread mHandlerThread;
@@ -1064,6 +1065,14 @@ public final class PowerManagerService extends SystemService
                 com.android.internal.R.integer.config_button_brightness_default);
         mSmartChargingLevelDefaultConfig = resources.getInteger(
                 com.android.internal.R.integer.config_smartChargingBatteryLevel);
+        mBatteryChargerPath = resources.getString(
+                com.android.internal.R.string.config_batteryChargerPath);
+        mChargerPath = resources.getString(
+                com.android.internal.R.string.config_chargerPath);
+        mEnableChargingValue = resources.getString(
+                com.android.internal.R.string.config_enableCharging);
+        mDisableChargingValue = resources.getString(
+                com.android.internal.R.string.config_disableCharging);
     }
 
     private void updateSettingsLocked() {
@@ -1905,9 +1914,9 @@ public final class PowerManagerService extends SystemService
             if (mChargeBattery != allowBatteryCharging) {
                 try {
                     mChargeBattery = allowBatteryCharging;
-                    FileUtils.stringToFile(BATTERY_CHARGER_PATH, mChargeBattery ? "1" : "0");
+                    FileUtils.stringToFile(mBatteryChargerPath, mChargeBattery ? mEnableChargingValue : mDisableChargingValue);
                 } catch (IOException e) {
-                    Slog.e(TAG, "failed to write to " + BATTERY_CHARGER_PATH);
+                    Slog.e(TAG, "failed to write to " + mBatteryChargerPath);
                     mChargeBattery = !mChargeBattery;
                 }
             }
@@ -1915,9 +1924,9 @@ public final class PowerManagerService extends SystemService
             if (mUseCharger != allowCharger) {
                 try {
                     mUseCharger = allowCharger;
-                    FileUtils.stringToFile(CHARGER_PATH, mUseCharger ? "1" : "0");
+                    FileUtils.stringToFile(mChargerPath, mUseCharger ? mEnableChargingValue : mDisableChargingValue);
                 } catch (IOException e) {
-                    Slog.e(TAG, "failed to write to " + CHARGER_PATH);
+                    Slog.e(TAG, "failed to write to " + mChargerPath);
                     mUseCharger = !mUseCharger;
                 }
             }

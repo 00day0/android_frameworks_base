@@ -97,8 +97,12 @@
     <bool name="config_useDarkBgNotificationTinting_override">false</bool>
     <bool name="config_notificationTinting_override">false</bool>
 
-    <!-- Smart charging battery percentage -->
+    <!-- Smart charging -->
     <integer name="config_smartChargingBatteryLevel">80</integer>
+    <string name="config_batteryChargerPath" translatable="false">/sys/class/power_supply/battery/battery_charging_enabled</string>
+    <string name="config_chargerPath" translatable="false">/sys/class/power_supply/battery/charging_enabled</string>
+    <string name="config_enableCharging">1</string>
+    <string name="config_disableCharging">0</string>
 
     <!-- True if the home button has the ability to wake up phone from lockscreen-->
     <bool name="config_HomeWakeButton">false</bool>
