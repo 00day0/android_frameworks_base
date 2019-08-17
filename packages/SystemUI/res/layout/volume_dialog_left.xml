@@ -30,8 +30,8 @@
         android:paddingBottom="@dimen/volume_dialog_panel_transparent_padding_vertical"
         android:paddingLeft="@dimen/volume_dialog_panel_transparent_padding_horizontal"
         android:orientation="vertical"
-        android:layout_gravity="end"
-        android:gravity="end"
+        android:layout_gravity="start"
+        android:gravity="start"
         android:clipToPadding="false" >
 
         <FrameLayout
