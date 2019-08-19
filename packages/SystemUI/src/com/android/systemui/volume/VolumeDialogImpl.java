@@ -78,7 +78,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -125,7 +124,7 @@ public class VolumeDialogImpl implements VolumeDialog {
     private CustomDialog mDialog;
     private ViewGroup mDialogView;
     private ViewGroup mDialogRowsView;
-    private FrameLayout mRinger;
+    private ViewGroup mRinger;
     private ImageButton mRingerIcon;
     private View mExpandRowsView;
     private ExpandableIndicator mExpandRows;
@@ -251,21 +250,15 @@ public class VolumeDialogImpl implements VolumeDialog {
         mRinger = mDialog.findViewById(R.id.ringer);
         mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
         mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
-
-        LinearLayout.LayoutParams paramsRinger = (LinearLayout.LayoutParams) mRinger.getLayoutParams();
-        FrameLayout.LayoutParams paramsExpandRows = (FrameLayout.LayoutParams) mExpandRows.getLayoutParams();
-        if(!isAudioPanelOnLeftSide()) {            
-            paramsRinger.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
-            paramsExpandRows.gravity = Gravity.RIGHT;
+        if(!isAudioPanelOnLeftSide()) {
+            mRinger.setForegroundGravity(Gravity.RIGHT);
+            mExpandRows.setForegroundGravity(Gravity.RIGHT);
             mExpandRows.setRotation(90);
         } else {
-            paramsRinger.gravity = Gravity.LEFT|Gravity.CENTER_VERTICAL;
-            paramsExpandRows.gravity = Gravity.LEFT;
+            mRinger.setForegroundGravity(Gravity.LEFT);
+            mExpandRows.setForegroundGravity(Gravity.LEFT);
             mExpandRows.setRotation(-90);
         }
-        mRinger.setLayoutParams(paramsRinger);
-        mExpandRows.setLayoutParams(paramsExpandRows);
-
         mRingerIcon = mRinger.findViewById(R.id.ringer_icon);
         mZenIcon = mRinger.findViewById(R.id.dnd_icon);
 
