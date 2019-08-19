@@ -22,6 +22,7 @@
 
     <LinearLayout
         android:id="@+id/volume_dialog"
+        android:minWidth="@dimen/volume_dialog_panel_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -30,8 +31,6 @@
         android:paddingBottom="@dimen/volume_dialog_panel_transparent_padding_vertical"
         android:paddingLeft="@dimen/volume_dialog_panel_transparent_padding_horizontal"
         android:orientation="vertical"
-        android:layout_gravity="end"
-        android:gravity="end"
         android:clipToPadding="false" >
 
         <FrameLayout
@@ -73,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:minWidth="@dimen/volume_dialog_panel_width"
                 android:gravity="center"
-                android:animateLayoutChanges="true"
                 android:orientation="horizontal"
                 android:paddingRight="@dimen/volume_dialog_stream_padding"
                 android:paddingLeft="@dimen/volume_dialog_stream_padding">
@@ -86,7 +84,6 @@
                 android:background="@drawable/rounded_bg_bottom_background">
                 <com.android.systemui.statusbar.phone.ExpandableIndicator
                     android:id="@+id/expandable_indicator"
-                    android:layout_gravity="start"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:clipToPadding="false"

@@ -87,7 +87,6 @@ import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
-import android.content.res.Resources;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
@@ -206,16 +205,15 @@ public class VolumeDialogImpl implements VolumeDialog {
         lp.setTitle(VolumeDialogImpl.class.getSimpleName());
         if(!isAudioPanelOnLeftSide()){
             lp.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
-            mDialog.setContentView(R.layout.volume_dialog);
         } else {
             lp.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
-            mDialog.setContentView(R.layout.volume_dialog_left);
         }
         lp.windowAnimations = -1;
         mWindow.setAttributes(lp);
         mWindow.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         mDialog.setCanceledOnTouchOutside(true);
+        mDialog.setContentView(R.layout.volume_dialog);
         mDialog.setOnShowListener(dialog -> {
             if (!isLandscape()) mDialogView.setTranslationX((mDialogView.getWidth() / 2)*(!isAudioPanelOnLeftSide() ? 1 : -1));
             mDialogView.setAlpha(0);
@@ -339,7 +337,11 @@ public class VolumeDialogImpl implements VolumeDialog {
         if (D.BUG) Slog.d(TAG, "Adding row for stream " + stream);
         VolumeRow row = new VolumeRow();
         initRow(row, stream, iconRes, iconMuteRes, important, defaultStream);
-        mDialogRowsView.addView(row.view);
+        if(!isAudioPanelOnLeftSide()){
+            mDialogRowsView.addView(row.view, 0);
+        } else {
+            mDialogRowsView.addView(row.view);
+        }
         mRows.add(row);
     }
 
@@ -489,9 +491,6 @@ public class VolumeDialogImpl implements VolumeDialog {
 
         mExpandRows.setOnClickListener(v -> {
             if(!mExpanded) {
-
-                mDialogView.setMinimumWidth(mContext.getResources().getDimensionPixelSize(R.dimen.volume_dialog_panel_width_expanded));
-
                 VolumeRow row = findRow(AudioManager.STREAM_RING);
                 if (row != null) {
                     Util.setVisOrGone(row.view, /* vis */ true);
@@ -524,7 +523,6 @@ public class VolumeDialogImpl implements VolumeDialog {
             } else {
                 cleanExpandRows();
                 mExpanded = false;
-                mDialogView.setMinimumWidth(mContext.getResources().getDimensionPixelSize(R.dimen.volume_dialog_panel_width));
             }
             mExpandRows.setExpanded(mExpanded);
         });
@@ -679,7 +677,6 @@ public class VolumeDialogImpl implements VolumeDialog {
                     mExpanded = false;
                     mExpandRows.setExpanded(mExpanded);
                 }, 50));
-        mDialogView.setMinimumWidth(mContext.getResources().getDimensionPixelSize(R.dimen.volume_dialog_panel_width));
         if (!isLandscape()) animator.translationX((mDialogView.getWidth() / 2)*(!isAudioPanelOnLeftSide() ? 1 : -1));
         animator.start();
 
